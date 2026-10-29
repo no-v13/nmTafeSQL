@@ -33,7 +33,11 @@ namespace BudgetTracker
                         reader.GetUInt32("id"),
                         reader.GetString("name"),
                         reader.GetUInt32("credit"),
-                        reader.GetUInt32("debit")
+                        reader.GetUInt32("debit") //-> data invert :  reader.GetDateTime("time")
+                        /*
+                         * string = "YYYY-MM-DD HH: ~~"
+                         * DateTime.Parse(string) _. getting this from C sharp
+                         */
                     ));
                 }
             }

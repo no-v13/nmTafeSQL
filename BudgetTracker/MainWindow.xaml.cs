@@ -28,6 +28,7 @@ namespace BudgetTracker
         {
             budgetItems.ItemsSource = budgetTracker.LineItems;
             totalCredit.Text = budgetTracker.TotalCredit().ToString();
+            totalDebit.Text = budgetTracker.TotalDebit().ToString();
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -60,11 +61,17 @@ namespace BudgetTracker
         {
             int index = budgetItems.SelectedIndex;
             LineItem lineItem = budgetTracker.LineItems[index];
-            int amount = int.Parse(itemAmount.Text);
-            uint[] result = getAmount(amount);
+
+            if(itemAmount.Text !="")
+            {
+                int amount = int.Parse(itemAmount.Text); 
+                uint[] result = getAmount(amount);
+                lineItem.Debit = result[1];
+                lineItem.Credit = result[0];
+            }
+           
             lineItem.Name = itemName.Text;
-            lineItem.Debit = result[1];
-            lineItem.Credit = result[0];
+            
 
             budgetTracker.UpdateLineItem(lineItem);
             RefreshView();
@@ -85,8 +92,19 @@ namespace BudgetTracker
 
         private void searchButton_Click(object sender, RoutedEventArgs e)
         {
+            string keyword = searchBar.Text;
+            List<LineItem> searchList = new List<LineItem>();
 
-
+            foreach (var word in budgetTracker.LineItems) 
+            {
+                if (word.Name.Contains(keyword))
+                {
+                    searchList.Add(word);
+                }
+            }
+            budgetItems.ItemsSource = searchList;
         }
+
+       
     }
 }

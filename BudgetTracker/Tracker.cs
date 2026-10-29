@@ -48,7 +48,7 @@ namespace BudgetTracker
             RefreshDB();
         }
         public uint TotalCredit() {
-            // TODO: Do something with your lineItems
+            
             uint totalCredit = 0;
             foreach (LineItem item in this.lineItems)
             {
@@ -59,8 +59,11 @@ namespace BudgetTracker
 
         public uint TotalDebit()
         {
-            // TODO: Do something with your lineItems
-            return 0;
+            uint totalDebit = 0;
+            foreach(LineItem item in this.lineItems)
+            {
+                totalDebit = totalDebit + item.Debit;
+            }return totalDebit;
         }
     }
 }
